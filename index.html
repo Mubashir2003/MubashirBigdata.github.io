@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Big Data & Machine Learning Case Study</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* --- DARK MODE THEME COLORS --- */
+        :root {
+            --color-primary: #60a5fa; /* Light Blue for main accents */
+            --color-secondary: #3b82f6; /* Medium Blue for emphasis */
+            --color-light: #1f2937; /* Dark Gray for secondary sections and cards */
+            --color-dark: #e5e7eb; /* Light Gray for main text */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712; /* Nearly black background */
+            color: var(--color-dark);
+        }
+        .text-primary { color: var(--color-primary); }
+        .bg-primary { background-color: var(--color-primary); }
+        .bg-light { background-color: var(--color-light); }
+        .text-dark { color: #030712; } /* Utility for dark text in light elements */
+
+        /* Custom Card Style with Subtle Gradient/Shadow */
+        .card {
+            background: var(--color-light); /* Dark card background */
+            border-radius: 1.5rem; /* Large rounded corners */
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.05), 0 4px 6px rgba(96, 165, 250, 0.03); /* Soft blue shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--color-dark); /* Ensure card text is light */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(96, 165, 250, 0.1), 0 6px 8px rgba(96, 165, 250, 0.05);
+        }
+
+        /* Navigation bar adjustment for dark mode */
+        .navbar-dark {
+            background-color: #1f2937; /* Dark navigation bar */
+            border-bottom: 1px solid #374151;
+        }
+        .navbar-link {
+            color: #9ca3af; /* Light gray links */
+        }
+        .navbar-link:hover {
+            color: var(--color-primary); /* Primary blue hover */
+        }
+
+        /* Smooth Scroll Behavior */
+        html { scroll-behavior: smooth; }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Gradient Separator adjusted for dark mode */
+        .separator {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-secondary), transparent);
+            margin: 4rem auto;
+        }
+
+        /* Collapsible Styling */
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .collapse-input:checked + .collapse-label + .collapse-content {
+            max-height: 2000px; /* Large value to accommodate content */
+        }
+        .collapse-input:checked + .collapse-label .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (Dark Mode) -->
+<nav class="sticky top-0 z-50 navbar-dark shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <a href="#hero" class="text-xl font-bold text-primary">Healthcare Analytics</a>
+            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                <a href="#problem" class="navbar-link hover:text-primary transition duration-150 py-2">Problem</a>
+                <a href="#data" class="navbar-link hover:text-primary transition duration-150 py-2">Data</a>
+                <a href="#pipeline" class="navbar-link hover:text-primary transition duration-150 py-2">Pipeline</a>
+                <a href="#methodology" class="navbar-link hover:text-primary transition duration-150 py-2">ML Method</a>
+                <a href="#implementation" class="navbar-link hover:text-primary transition duration-150 py-2">Plan</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main>
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="bg-[#030712] py-20 md:py-32 flex items-center min-h-screen border-b border-[#1f2937]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full bg-blue-800 text-blue-200 mb-4">Case Study Overview</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                Healthcare Big Data & Machine Learning Case Study
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto">
+                End-to-End Pipeline for Patient Experience, Imaging Analytics, and Predictive Modeling
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-dark bg-primary hover:bg-secondary transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-download mr-3"></i> Download Report
+                </a>
+                <a href="#pipeline" class="inline-flex items-center justify-center px-8 py-3 border border-secondary text-base font-medium rounded-full text-primary bg-gray-800 hover:bg-gray-700 transition duration-300 transform hover:scale-105">
+                    Explore Pipeline <i class="fas fa-arrow-right ml-3"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Problem Statement -->
+    <section id="problem" class="py-20 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-primary mb-12 fade-in"><i class="fas fa-exclamation-triangle mr-3"></i> Problem Statement</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Background -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.1s;">
+                    <div class="text-2xl text-secondary mb-3"><i class="fas fa-hospital-alt"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">1. Background</h3>
+                    <p class="text-gray-400 text-sm">Healthcare organizations face increasing pressure to deliver high-quality, patient-centered care while simultaneously minimizing operational costs. As patients move through different departments, treatments, and stages of care, they generate large volumes of heterogeneous data, including clinical records, diagnostic results, care timelines, medical images, and physician notes. When analyzed effectively, this data can reveal deep insights into patient journeys, clinical decision patterns, and bottlenecks that affect care quality. However, traditional analytical systems are not capable of integrating and interpreting multi-structured data at scale, resulting in underutilization of patient information and limited visibility into the entire care continuum.</p>
+                </div>
+                <!-- Problem Context -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.2s;">
+                    <div class="text-2xl text-secondary mb-3"><i class="fas fa-puzzle-piece"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">2. Problem Context</h3>
+                    <p class="text-gray-400 text-sm">The central challenge in enhancing patient experience lies in the complexity, volume, and diversity of healthcare data. Modern patient pathways involve multiple interactions—admissions, lab tests, imaging, consultations, and discharge events—spread across various systems that are rarely synchronized. Moreover, much of this data exists in formats such as free-text physician notes or high-resolution medical images, which require advanced analytical approaches to extract actionable insights. Without a unified and intelligent data-driven framework, healthcare organizations struggle to understand patient movement, identify risk signals early, and detect inefficiencies that lead to longer hospital stays, unplanned readmissions, or inconsistent care delivery.</p>
+                </div>
+                <!-- Core Problem -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.3s;">
+                    <div class="text-2xl text-secondary mb-3"><i class="fas fa-cogs"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">3. Core Problem</h3>
+                    <p class="text-gray-400 text-sm">The key problem addressed in this study is the lack of a scalable, integrated analytics system capable of processing large structured datasets (5 million+ records) or extensive medical imaging repositories (10 GB+) to map patient journeys and predict outcomes effectively. Healthcare providers require a pipeline that can collect, clean, and harmonize multi-modal patient data, analyze interactions across departments, and apply advanced machine learning techniques to predict adverse events, highlight care-delivery gaps, and support timely clinical decision-making. Current systems are fragmented and reactive, often detecting issues only after negative events occur rather than anticipating them proactively.</p>
+                </div>
+                <!-- Problem Significance -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.4s;">
+                    <div class="text-2xl text-secondary mb-3"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">4. Problem Significance</h3>
+                    <p class="text-gray-400 text-sm">Resolving this challenge is essential for transforming healthcare organizations into learning health systems that continuously improve based on real-world data. By developing a robust analytics and machine-learning pipeline, healthcare providers can gain a 360-degree view of the patient journey, reduce delays in care, minimize clinical errors, and improve overall patient satisfaction. Timely risk prediction, optimized pathways, and better resource allocation can directly enhance patient outcomes while controlling costs. Therefore, the absence of such a scalable data-intelligence framework not only limits clinical performance but also hinders the broader goal of achieving high-value, patient-centered care across the healthcare ecosystem.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <!-- 3. Data Sourcing -->
+    <section id="data" class="py-20 bg-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-primary mb-12 fade-in"><i class="fas fa-database mr-3"></i> Data Sourcing: NIH ChestX-ray14</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Data Source Card -->
+                <div class="card p-6 lg:col-span-2 fade-in">
+                    <h3 class="text-2xl font-semibold mb-3 text-secondary">Data Source</h3>
+                    <p class="text-gray-400">The dataset selected for this study is the <strong>NIH ChestX-ray14 Dataset</strong>, a large-scale medical imaging repository developed by the <strong>National Institutes of Health (NIH) Clinical Center</strong>. It contains <strong>112,120 frontal-view chest X-ray images</strong> from <strong>30,805 patients</strong>, making it one of the most comprehensive open-access medical imaging datasets available for research. The dataset fulfills the requirement for a high-volume (10GB+) image-based data source and is widely recognized for supporting machine-learning research in diagnostic imaging, clinical prediction, and computer-aided detection. Its size, diversity of pathologies, and real-world clinical relevance make it an ideal dataset for developing imaging-based ML pipelines.</p>
+                </div>
+
+                <!-- Dataset Link Card -->
+                <div class="card p-6 flex flex-col justify-between fade-in" style="background-color: var(--color-secondary); color: var(--color-dark); font-weight: 600;">
+                    <h3 class="text-2xl font-semibold mb-3 text-dark"><i class="fas fa-link mr-2 text-dark"></i> Dataset Link</h3>
+                    <div class="bg-blue-800 p-4 rounded-xl mb-4 text-sm font-mono break-all text-white">
+                        https://nihcc.app.box.com/v/ChestXray-NIHCC
+                    </div>
+                    <a href="https://nihcc.app.box.com/v/ChestXray-NIHCC" target="_blank" class="inline-flex items-center justify-center px-4 py-2 border border-dark text-base font-medium rounded-full text-dark bg-white hover:bg-gray-100 transition duration-300">
+                        Access Repository
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Why This Dataset -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.1s;">
+                    <h3 class="text-xl font-semibold mb-3 text-secondary"><i class="fas fa-thumbs-up mr-2"></i> Why This Dataset</h3>
+                    <p class="text-gray-400">This dataset is selected due to its <strong>large scale, clinical realism, and multi-label disease characteristics</strong>. Each image is annotated for one or more of <strong>14 thoracic conditions</strong>, including Atelectasis, Cardiomegaly, Pneumonia, Mass, Nodule, Effusion, and others, enabling multi-label classification and deep-learning model development. Its widespread use in previous research—including the development of well-known models like <strong>CheXNet</strong>—provides a strong benchmark for comparison and validation. The dataset is also fully de-identified, ensuring compliance with privacy and ethical guidelines while offering real-world complexity found in hospital imaging workflows.</p>
+                </div>
+                <!-- Citation and Limitations -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.2s;">
+                    <h3 class="text-xl font-semibold mb-3 text-secondary"><i class="fas fa-times-circle mr-2"></i> Citation and Limitations</h3>
+                    <p class="text-gray-400 mb-4">The original work introducing the dataset is published as: Wang, X. et al. (2017). “ChestX-ray8: Hospital-Scale Chest X-ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases.” IEEE CVPR .</p>
+                    <p class="text-gray-400 font-medium"><strong>Limitations:</strong> Although ChestX-ray14 is a valuable resource, it has notable limitations. Disease labels were generated automatically using NLP on radiology reports, potentially introducing <strong>label noise</strong> or misclassification. Most images lack <strong>bounding-box annotations</strong>, making precise localization difficult. The dataset also suffers from <strong>class imbalance</strong>, with some diseases significantly underrepresented. Furthermore, it contains only imaging and minimal metadata—no longitudinal patient records or clinical outcomes—limiting its usefulness for full patient-journey modeling. Despite these limitations, ChestX-ray14 remains one of the most effective and widely adopted datasets for large-scale medical imaging analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <!-- 4. Pipeline Design (Visual Flow Diagram) -->
+    <section id="pipeline" class="py-20 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-primary mb-16 fade-in"><i class="fas fa-stream mr-3"></i> End-to-End Pipeline Design</h2>
+
+            <!-- <!-- START: Pipeline Flowchart Image -->
+<div class="card p-4 mb-16 fade-in" style="transition-delay: 0.1s;">
+    <img 
+        src="Pipeline.png"
+        alt="Visual Flow Diagram of the Data and ML Pipeline"
+        class="w-full max-w-6xl mx-auto h-auto max-h-[550px] rounded-xl shadow-2xl object-contain"
+        onerror="this.onerror=null; this.src='https://placehold.co/1600x600/1f2937/60a5fa?text=Flowchart+Image+Not+Found';"
+    >
+</div>
+<!-- END: Pipeline Flowchart Image -->
+
+            <!-- END: Pipeline Flowchart Image -->
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <!-- 1. Data Ingestion -->
+                <div class="card p-6 flex flex-col items-center text-center relative lg:col-span-1 fade-in">
+                    <div class="text-4xl text-secondary mb-4"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Data Ingestion</h3>
+                    <p class="text-gray-400 text-sm">Data ingestion marks the entry point of the pipeline and is tailored to handle two heterogeneous sources: (1) a large structured dataset of approximately five million patient records, and (2) a 10 GB+ medical imaging dataset (ChestX-ray14). To achieve high-throughput and reliability, the ingestion process uses a hybrid of batch and streaming techniques. For structured patient records (EHRs, lab results, visit histories), tools such as Apache NiFi, Apache Kafka Connect, or Azure Data Factory are used to extract data from hospital databases, CSV repositories, or cloud storage. Schema validation, missing metadata detection, and incremental extraction strategies (e.g., CDC—Change Data Capture) ensure continuity and data integrity. Image ingestion for the ChestX-ray14 dataset involves downloading image archives from the NIH repository and storing them in an object storage bucket. During ingestion, metadata (image resolution, patient ID, labels) is parsed from dataset CSV files and linked with the images. All ingested data undergoes compliance checks for PHI (Protected Health Information), ensuring alignment with HIPAA and privacy guidelines.</p>
+                    <div class="hidden lg:block absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center shadow-lg"><i class="fas fa-arrow-right text-white text-xs"></i></div>
+                </div>
+
+                <!-- 2. Storage -->
+                <div class="card p-6 flex flex-col items-center text-center relative lg:col-span-1 fade-in" style="transition-delay: 0.1s;">
+                    <div class="text-4xl text-secondary mb-4"><i class="fas fa-server"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Storage</h3>
+                    <p class="text-gray-400 text-sm">A dual-layer storage architecture is employed to optimize for speed, scalability, and cost efficiency. Structured datasets are stored in a <strong>distributed data warehouse</strong> such as Amazon Redshift, Google BigQuery, or Azure Synapse Analytics. These systems support complex SQL queries and rapid analytical workloads on millions of rows. The ChestX-ray14 images are stored in <strong>object-based storage</strong> such as AWS S3, Azure Blob Storage, or Google Cloud Storage. Object storage allows for scalable storage of medical images while supporting parallel access required by deep learning pipelines. To ensure easy dataset discovery and governance, a metadata catalog—such as AWS Glue Data Catalog, Apache Hive Metastore, or Azure Purview—is used to document table structures, dataset lineage, and compliance attributes. Access control policies, encryption-at-rest, and network isolation guarantees secure storage of clinical data.</p>
+                    <div class="hidden lg:block absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center shadow-lg"><i class="fas fa-arrow-right text-white text-xs"></i></div>
+                </div>
+
+                <!-- 3. Processing -->
+                <div class="card p-6 flex flex-col items-center text-center relative lg:col-span-1 fade-in" style="transition-delay: 0.2s;">
+                    <div class="text-4xl text-secondary mb-4"><i class="fas fa-filter"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Processing</h3>
+                    <p class="text-gray-400 text-sm">Data processing transforms raw healthcare data into model-ready formats. For structured data, preprocessing includes handling missing values, standardizing medical codes (ICD, CPT), normalizing numerical features, label encoding categorical variables, and generating patient journey timelines using timestamp fields. Processing tools include Apache Spark, Pandas, and Databricks, enabling cluster-level performance for multi-million-row datasets. Image preprocessing for ChestX-ray14 is handled using OpenCV, TensorFlow, or PyTorch. Steps include: Image resizing to a uniform dimension (e.g., 224×224), Pixel normalization, Noise reduction and histogram equalization, Data augmentation (rotation, scaling, horizontal flip), Conversion to tensors, Train–validation–test splitting based on patient IDs to avoid data leakage. All processed data is stored back in feature stores such as Feast, Hopsworks, or Databricks Feature Store, ensuring consistency across modeling stages.</p>
+                    <div class="hidden lg:block absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center shadow-lg"><i class="fas fa-arrow-right text-white text-xs"></i></div>
+                </div>
+
+                <!-- 4. Analytics & Modeling -->
+                <div class="card p-6 flex flex-col items-center text-center relative lg:col-span-1 fade-in" style="transition-delay: 0.3s;">
+                    <div class="text-4xl text-secondary mb-4"><i class="fas fa-robot"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Analytics & Modeling</h3>
+                    <p class="text-gray-400 text-sm">This stage integrates statistical analysis with machine learning and deep learning workflows aimed at improving patient outcomes and understanding patient journeys. For structured patient data, analytics focus on: Identifying bottlenecks in care delivery, Predicting readmission risk, Classifying patient severity levels, Clustering patient journeys to detect inefficiencies. ML models such as Random Forest, XGBoost, or Logistic Regression are used due to their robustness and interpretability. For imaging data, deep learning models analyze chest X-rays to detect abnormalities linked to various pathologies. Recommended CNN architectures include: ResNet-50, DenseNet-121, EfficientNet-B3. Model training and orchestration use platforms such as MLflow, Kubeflow, AWS SageMaker, or Vertex AI, enabling reproducibility, versioning, experiment tracking, and scalable GPU training.</p>
+                    <div class="hidden lg:block absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center shadow-lg"><i class="fas fa-arrow-right text-white text-xs"></i></div>
+                </div>
+
+                <!-- 5. Visualizations -->
+                <div class="card p-6 flex flex-col items-center text-center lg:col-span-1 fade-in" style="transition-delay: 0.4s;">
+                    <div class="text-4xl text-secondary mb-4"><i class="fas fa-chart-area"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Visualizations</h3>
+                    <p class="text-gray-400 text-sm">Visualization is essential for converting analytical findings into clinically actionable insights. Dashboards and visual analytics tools allow administrators, physicians, and researchers to interpret system performance and patient metrics at a glance. High-level business visualizations are built using: Tableau – patient flow heatmaps, departmental delays, risk profiles, Power BI – hospital KPIs, operational dashboards, resource utilization. For data science and research teams, Python visualization libraries such as: Matplotlib – model accuracy and loss graphs, Seaborn – correlation matrices, feature importance plots, Plotly – interactive patient journey timelines, Grad-CAM visualizations for CNN interpretability of chest X-rays. Additionally, deep learning visualizations help clinicians understand which regions of an X-ray influenced predictions, improving trust in AI-driven diagnostics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <!-- 5. Machine Learning Methodology -->
+    <section id="methodology" class="py-20 bg-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-primary mb-12 fade-in"><i class="fas fa-brain mr-3"></i> Machine Learning Methodology</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Pre-Processing -->
+                <div class="card p-6 fade-in">
+                    <div class="text-4xl mb-4 text-blue-500"><i class="fas fa-gears"></i></div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">1. Pre-Processing</h3>
+                    <p class="text-gray-400 mb-3">Pre-processing is essential to convert raw, heterogeneous healthcare data into standardized, high-quality inputs suitable for machine learning and deep learning models. The process is divided into two segments: (a) structured patient data, and (b) unstructured imaging data from the NIH ChestX-ray14 dataset.</p>
+                    <div class="mt-4 space-y-3">
+                        <h4 class="font-bold text-primary">Structured Clinical Data:</h4>
+                        <ul class="text-sm list-disc pl-5 text-gray-400 space-y-1">
+                            <li><i class="fas fa-broom mr-2 text-secondary"></i><strong>Data Cleaning:</strong> Handling missing values, removing duplicates, standardizing medical terminologies.</li>
+                            <li><i class="fas fa-screwdriver-wrench mr-2 text-secondary"></i><strong>Feature Engineering:</strong> Generating patient journey timelines, risk indicators, length of stay.</li>
+                            <li><i class="fas fa-sliders-h mr-2 text-secondary"></i><strong>Normalization/Scaling:</strong> Applying MinMax scaling or StandardScaler.</li>
+                        </ul>
+                        <h4 class="font-bold text-primary mt-4">Imaging Data (ChestX-ray14):</h4>
+                        <ul class="text-sm list-disc pl-5 text-gray-400 space-y-1">
+                            <li><i class="fas fa-crop-simple mr-2 text-secondary"></i><strong>Image Standardization:</strong> Converting to grayscale, resizing (e.g., 224x224), normalizing pixel values.</li>
+                            <li><i class="fas fa-clone mr-2 text-secondary"></i><strong>Enhancement & Split:</strong> Noise reduction, applying data augmentation, splitting based on patient IDs.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Algorithm Recommendation -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.1s;">
+                    <div class="text-4xl mb-4 text-blue-500"><i class="fas fa-robot"></i></div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">2. Algorithm Recommendation</h3>
+                    <p class="text-gray-400 mb-3">To address the complexity of multimodal healthcare data—structured patient records and medical imaging—multiple algorithms are recommended, selected for their robustness, accuracy, and interpretability in clinical environments.</p>
+                    <div class="mt-4 space-y-3">
+                        <h4 class="font-bold text-primary">Structured Data Models:</h4>
+                        <ul class="text-sm list-disc pl-5 text-gray-400 space-y-1">
+                            <li><i class="fas fa-tree mr-2 text-secondary"></i><strong>Random Forest:</strong> Effective for tabular data with mixed feature types and high interpretability.</li>
+                            <li><i class="fas fa-bolt mr-2 text-secondary"></i><strong>XGBoost / LightGBM:</strong> State-of-the-art performance for risk scoring and classification.</li>
+                            <li><i class="fas fa-circle-nodes mr-2 text-secondary"></i><strong>Clustering (K-Means/DBSCAN):</strong> For identifying patient groups and treatment patterns.</li>
+                        </ul>
+                        <h4 class="font-bold text-primary mt-4">Imaging Data (Deep Learning):</h4>
+                        <ul class="text-sm list-disc pl-5 text-gray-400 space-y-1">
+                            <li><i class="fas fa-cube mr-2 text-secondary"></i><strong>DenseNet-121:</strong> Widely used in medical imaging research for multi-label classification.</li>
+                            <li><i class="fas fa-cubes mr-2 text-secondary"></i><strong>ResNet-50:</strong> Effective for general-purpose image classification tasks.</li>
+                            <li><i class="fas fa-gauge-high mr-2 text-secondary"></i><strong>EfficientNet-B3:</strong> Optimized for accuracy and computational cost.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dataset Analysis -->
+                <div class="card p-6 fade-in" style="transition-delay: 0.2s;">
+                    <div class="text-4xl mb-4 text-blue-500"><i class="fas fa-chart-bar"></i></div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">3. Dataset Analysis</h3>
+                    <p class="text-gray-400 mb-3">A thorough dataset analysis ensures an understanding of its statistical properties, class distribution, anomalies, and potential biases.</p>
+                    <div class="mt-4 space-y-3">
+                        <h4 class="font-bold text-primary">Structured Data Analysis:</h4>
+                        <ul class="text-sm list-disc pl-5 text-gray-400 space-y-1">
+                            <li><i class="fas fa-magnifying-glass-chart mr-2 text-secondary"></i><strong>EDA:</strong> Visualizing trends in age, gender, vitals, and departmental transitions.</li>
+                            <li><i class="fas fa-balance-scale mr-2 text-secondary"></i><strong>Imbalance Detection:</strong> Applying techniques like SMOTE or class weighting for rare complications.</li>
+                            <li><i class="fas fa-code-compare mr-2 text-secondary"></i><strong>Correlation Analysis:</strong> Identifying highly correlated clinical features.</li>
+                        </ul>
+                        <h4 class="font-bold text-primary mt-4">Imaging Data Analysis:</h4>
+                        <ul class="text-sm list-disc pl-5 text-gray-400 space-y-1">
+                            <li><i class="fas fa-percent mr-2 text-secondary"></i><strong>Class Distribution:</strong> Addressing the highly imbalanced nature of the 14 pathology labels.</li>
+                            <li><i class="fas fa-tags mr-2 text-secondary"></i><strong>Multi-Label Complexity:</strong> Prioritizing AUC, F1-score, and precision-recall metrics.</li>
+                            <li><i class="fas fa-eye mr-2 text-secondary"></i><strong>Visual Inspection:</strong> Observing variations in image brightness, resolution, and artifacts.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <!-- 6. Implementation Plan -->
+    <section id="implementation" class="py-20 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-primary mb-12 fade-in"><i class="fas fa-code-branch mr-3"></i> Implementation Plan</h2>
+
+            <!-- Library Selection (Collapsible Section) -->
+            <div class="card p-6 mb-8 fade-in">
+                <input type="checkbox" id="collapse-libraries" class="collapse-input hidden" checked>
+                <label for="collapse-libraries" class="collapse-label flex justify-between items-center cursor-pointer p-2 rounded-lg text-xl font-bold text-secondary hover:bg-gray-700 transition duration-300">
+                    1. Library Selection
+                    <i class="fas fa-chevron-down text-lg transition-transform duration-300"></i>
+                </label>
+                <div class="collapse-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                        <!-- Data Ingestion and Storage Table -->
+                        <div class="p-4 border-2 border-secondary rounded-xl bg-[#030712] shadow-md">
+                            <h4 class="text-lg font-semibold mb-2 text-primary"><i class="fas fa-server mr-2"></i> Ingestion & Storage</h4>
+                            <ul class="space-y-2 text-sm text-gray-400">
+                                <li class="font-medium">Data Handling: <span class="text-secondary">Pandas, Dask, Apache Spark</span></li>
+                                <li>Streaming: <span class="text-secondary">Apache Kafka, Apache NiFi</span></li>
+                                <li>Data Warehouse: <span class="text-secondary">AWS Redshift, Google BigQuery</span></li>
+                                <li>Object Storage: <span class="text-secondary">AWS S3, Azure Blob</span></li>
+                            </ul>
+                        </div>
+                        <!-- Data Pre-Processing Table -->
+                        <div class="p-4 border-2 border-secondary rounded-xl bg-[#030712] shadow-md">
+                            <h4 class="text-lg font-semibold mb-2 text-primary"><i class="fas fa-flask mr-2"></i> Pre-Processing & EDA</h4>
+                            <ul class="space-y-2 text-sm text-gray-400">
+                                <li class="font-medium">Structured Prep: <span class="text-secondary">Pandas, NumPy, PySpark</span></li>
+                                <li>Image Prep: <span class="text-secondary">OpenCV, Pillow, TensorFlow Image</span></li>
+                                <li>Feature Eng.: <span class="text-secondary">Scikit-learn, tsfresh</span></li>
+                                <li>Visualization: <span class="text-secondary">Matplotlib, Seaborn, Plotly</span></li>
+                            </ul>
+                        </div>
+                        <!-- ML Models and Deployment Table -->
+                        <div class="p-4 border-2 border-secondary rounded-xl bg-[#030712] shadow-md">
+                            <h4 class="text-lg font-semibold mb-2 text-primary"><i class="fas fa-rocket mr-2"></i> Modeling & Deployment</h4>
+                            <ul class="space-y-2 text-sm text-gray-400">
+                                <li class="font-medium">Structured ML: <span class="text-secondary">Scikit-learn, XGBoost, LightGBM</span></li>
+                                <li>Deep Learning: <span class="text-secondary">TensorFlow/Keras, PyTorch</span></li>
+                                <li>Interpretability: <span class="text-secondary">Captum, Grad-CAM modules</span></li>
+                                <li>Deployment: <span class="text-secondary">FastAPI, MLflow, Prometheus</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pseudo Code / Logic (Collapsible Section) -->
+            <div class="card p-6 fade-in" style="transition-delay: 0.1s;">
+                <input type="checkbox" id="collapse-pseudocode" class="collapse-input hidden">
+                <label for="collapse-pseudocode" class="collapse-label flex justify-between items-center cursor-pointer p-2 rounded-lg text-xl font-bold text-secondary hover:bg-gray-700 transition duration-300">
+                    2. Pseudo Code / Logic
+                    <i class="fas fa-chevron-down text-lg transition-transform duration-300"></i>
+                </label>
+                <div class="collapse-content space-y-6 pt-4">
+                    
+                    <h3 class="text-2xl font-semibold mb-4 text-primary">2.1 Pseudo Code for Structured Patient Data Workflow</h3>
+                    <div class="bg-gray-800 p-4 rounded-lg text-white font-mono overflow-x-auto text-sm shadow-xl">
+                        <pre>
+Step 1: Load and Clean Structured Dataset
+BEGIN
+LOAD patient_data FROM warehouse
+REMOVE duplicate rows
+HANDLE missing values:
+    IF numeric → apply mean or median imputation
+    IF categorical → apply most-frequent imputation
+STANDARDIZE clinical codes (ICD, CPT)
+CONVERT timestamps to datetime format
+SORT records by patient_id, timestamp
+END
+
+Step 2: Feature Engineering
+BEGIN
+FOR EACH patient_id:
+    CALCULATE length_of_stay
+    CREATE sequence of department transitions
+    GENERATE risk indicators (comorbidity index, lab trends)
+    NORMALIZE numerical features using StandardScaler
+ENCODE categorical features using OneHot or LabelEncoder
+STORE processed_features INTO feature_store
+END
+
+Step 3: Model Training (Structured Data)
+BEGIN
+SPLIT data INTO train, validation, test sets
+INITIALIZE models:
+    logistic_regression
+    random_forest
+    xgboost_model
+FOR EACH model:
+    TRAIN model ON train_set
+    VALIDATE model ON val_set
+    RECORD accuracy, precision, recall, F1, ROC-AUC
+SELECT model WITH highest validation performance
+SAVE best_model
+END
+
+Step 4: Model Evaluation
+BEGIN
+LOAD best_model
+PREDICT on test_set
+GENERATE confusion_matrix, ROC curve, feature importance charts
+END
+                        </pre>
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mb-4 text-primary pt-6">2.2 Pseudo Code for Image Data Workflow (ChestX-ray14)</h3>
+                    <div class="bg-gray-800 p-4 rounded-lg text-white font-mono overflow-x-auto text-sm shadow-xl">
+                        <pre>
+Step 1: Load and Preprocess Images
+BEGIN
+LOAD image_paths FROM storage
+LOAD labels FROM dataset_csv
+FOR EACH image IN image_paths:
+    READ image using OpenCV
+    RESIZE to (224x224)
+    NORMALIZE pixel values to [0,1]
+    APPLY augmentations:
+        - random_flip
+        - rotation
+        - brightness adjustment
+    CONVERT to tensor
+SPLIT patients INTO train, validation, test
+ENSURE patient-level train-test separation
+END
+
+Step 2: CNN Model Development
+BEGIN
+SELECT pretrained_model = DenseNet121 / ResNet50 / EfficientNet
+REPLACE final layer WITH multi-label output layer (sigmoid activation)
+DEFINE loss_function = BinaryCrossEntropy
+DEFINE optimizer = Adam or SGD
+FOR epoch IN range(1 to N):
+    TRAIN model on augmented training images
+    COMPUTE validation loss
+    IF validation loss improves:
+        SAVE model checkpoint
+    APPLY early stopping if validation loss stagnates
+END
+
+Step 3: Multi-Label Evaluation
+BEGIN
+LOAD trained_CNN_model
+PREDICT probabilities for test images
+FOR EACH pathology_label:
+    CALCULATE AUC
+    CALCULATE precision, recall, F1
+GENERATE Grad-CAM visualizations for selected images
+END
+                        </pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#030712] text-white py-12 border-t border-[#1f2937]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-sm font-bold text-primary">
+            Made by Mubashir Hussain & Taimur Hamid
+        </p>
+    </div>
+</footer>
+
+<!-- JavaScript for Scroll Animations -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Apply observer to all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Toggle pseudo code collapse on load if default checked
+        const collapseInput = document.getElementById('collapse-pseudocode');
+        const collapseContent = document.querySelector('#collapse-pseudocode + .collapse-label + .collapse-content');
+
+        if (!collapseInput.checked) {
+             // Collapse Pseudo Code by default for cleaner view
+            collapseContent.style.maxHeight = '0px';
+        }
+
+         // Ensure Library Selection content is visible on load
+        const libCollapseInput = document.getElementById('collapse-libraries');
+        const libCollapseContent = document.querySelector('#collapse-libraries + .collapse-label + .collapse-content');
+        if (libCollapseInput.checked) {
+            libCollapseContent.style.maxHeight = libCollapseContent.scrollHeight + "px";
+        }
+
+        // Add event listener for toggling
+        document.querySelectorAll('.collapse-label').forEach(label => {
+            label.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                input.checked = !input.checked;
+                const content = this.nextElementSibling;
+                if (input.checked) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = "0";
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
